@@ -12,6 +12,7 @@ RUN apk add --no-cache \
         rabbitmq-c-dev && \
     docker-php-ext-install -j$(nproc) \
         zip \
+        pdo \
         pdo_mysql && \
     apk add --no-cache --virtual .phpize_deps $PHPIZE_DEPS && \
     pecl install xdebug-2.9.2 && \
@@ -24,6 +25,8 @@ RUN apk add --no-cache \
     rm -rf /tmp/pear && \
     apk del .phpize_deps && \
     mkdir /var/app
+
+RUN curl https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 COPY ./docker/php/config/php.ini /usr/local/etc/php/php.ini
 ENV PATH /var/app/bin:/var/app/vendor/bin:$PATH

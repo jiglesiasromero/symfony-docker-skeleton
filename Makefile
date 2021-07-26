@@ -1,8 +1,6 @@
-UID=$(shell id -u)
-GID=$(shell id -g)
 DOCKER_PHP_SERVICE=php-fpm
 
-start: erase cache-folders build up
+start: erase cache-folders build composer-install up
 
 erase:
 		docker-compose down -v
@@ -15,10 +13,10 @@ build:
 		docker-compose pull
 
 composer-install:
-		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} composer install
+		docker-compose run --rm ${DOCKER_PHP_SERVICE} composer install
 
 up:
 		docker-compose up -d
 
 bash:
-		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} sh
+		docker-compose run --rm ${DOCKER_PHP_SERVICE} sh
