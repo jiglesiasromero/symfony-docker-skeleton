@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: false
+    autoconfigure: false
+    public: false
+
+  App\Users\Domain\Model\User\UserRepository:
+    alias: App\Users\Infrastructure\Domain\Model\User\DbalUserRepository
+
+  App\Users\Infrastructure\Domain\Model\User\DbalUserRepository:
+    class: App\Users\Infrastructure\Domain\Model\User\DbalUserRepository
+    arguments:
+      $connection: '@connection.mysql.database'

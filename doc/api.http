@@ -1,0 +1,7 @@
+### Find user by id
+
+GET http://localhost:8080/users/v1/users/7fe42501-69d1-41d7-bf43-788e4aade3c4
+Content-Type: application/json
+
+
+###

@@ -1,0 +1,25 @@
+imports:
+  - { resource: entrypoint/commands.yaml }
+  - { resource: repositories.yaml }
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Users\Domain\Service\:
+    autowire: true
+    autoconfigure: true
+    resource: '../../../src/Users/Domain/Service/*'
+
+  App\Users\Application\Query\User\Find\FindUserHandler:
+    class: App\Users\Application\Query\User\Find\FindUserHandler
+    arguments:
+      $userFinder: '@domain.service.user.finder'
+    tags:
+      - { name: tactician.handler, command: App\Users\Application\Query\User\Find\FindUserQuery }
+
+  domain.service.user.finder:
+    class: App\Users\Domain\Service\User\UserFinder
+    arguments:
+      $userRepository: '@App\Users\Domain\Model\User\UserRepository'

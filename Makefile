@@ -1,3 +1,5 @@
+UID=$(shell id -u)
+GID=$(shell id -g)
 DOCKER_PHP_SERVICE=php-fpm
 
 start: erase cache-folders build composer-install up
@@ -13,10 +15,16 @@ build:
 		docker-compose pull
 
 composer-install:
-		docker-compose run --rm ${DOCKER_PHP_SERVICE} composer install
+		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} composer install
 
 up:
 		docker-compose up -d
 
+stop:
+		docker-compose stop
+
 bash:
-		docker-compose run --rm ${DOCKER_PHP_SERVICE} sh
+		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} sh
+
+run-migrations:
+		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} bin/console doctrine:migrations:execute -n --up 'DoctrineMigrations\Version20210727211516'

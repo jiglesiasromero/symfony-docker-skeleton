@@ -1,0 +1,4 @@
+user_create:
+  path: /v1/users/{id}
+  controller: App\Users\Entrypoint\Controller\UserController::find
+  methods: [GET]

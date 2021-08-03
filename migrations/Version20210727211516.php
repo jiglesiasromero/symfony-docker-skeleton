@@ -22,9 +22,13 @@ final class Version20210727211516 extends AbstractMigration
         $this->addSql('
             CREATE TABLE user (
                 id VARCHAR(36) NOT NULL,
-                user VARCHAR(255) NOT NULL,
-                password VARCHAR(36) NOT NULL
+                name VARCHAR(255) NOT NULL
             );
+        ');
+
+        $this->addSql('
+            INSERT INTO user (id, name)
+            VALUES("7fe42501-69d1-41d7-bf43-788e4aade3c4", "Pepe Iglesias");
         ');
     }
 
